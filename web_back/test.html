@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>test页面</title>
+    <script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.8.0.js"></script>
+
+</head>
+<body>
+<div>
+    <input type="text" id = "userId">
+</div>
+<div>
+    <input type="password" id="password">
+</div>
+<button onclick="login()">login</button>
+<div>
+    <button onclick="Water_y()">Water_y</button>
+    <button onclick="Mean_w()">WL</button>
+
+</div>
+<script>
+    function login(){
+        $.ajax({
+            url:"http://localhost:8000/login",
+            type:"post",
+            dataType:"json",
+
+            //data为要传递给后端的数据，使用JSON.stringify()转换为json格式
+            data:JSON.stringify({
+                    userId:   $("#userId").val(),
+                    password: $("#password").val()
+                }),
+            success:function (data){
+                alert("登录成功")
+                console.log(data)
+                console.log(data.status)
+            },
+            error:function (){
+                alert("登录失败")
+                console.log("***********")
+            }
+        })
+    }
+
+    function Water_y(){
+        $.ajax({
+            url:"http://localhost:8000/fitting",
+            type:"post",
+            dataType:"json",
+
+            data:JSON.stringify({
+                water:[1,2,3,5]   // 一年的逐时水位
+            }),
+            success:function (data){
+                console.log(data)
+            },
+            error:function (){
+                alert("失败")
+            }
+
+        })
+    }
+
+    function Mean_w(){
+        $.ajax({
+            url:"http://localhost:8000/waterLevel",
+            type:"post",
+            dataType:"json",
+            data:JSON.stringify({
+                head_q:[1,2,3,5],
+                foot_r:[1,2,3,5],
+                wl_day:[1,2,3,5]
+            }),
+            success:function (data){
+                console.log(data)
+            },
+            error:function (){
+                alert("失败")
+            }
+
+        })
+    }
+</script>
+
+
+</body>
+</html>
